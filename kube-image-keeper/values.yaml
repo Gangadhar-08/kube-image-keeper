@@ -376,6 +376,8 @@ minio:
 
 cert-manager:
   enabled: true
+  fullnameOverride: "cert-manager"
+  namespace: "cert-manager"
 
 serviceAccount:
   # -- Annotations to add to the servicateAccount
