@@ -374,11 +374,6 @@ minio:
         --secret-key "$(cat /opt/bitnami/minio/svcacct/registry/secretKey)"
         provisioning registry) > /dev/null
 
-cert-manager:
-  enabled: true
-  fullnameOverride: "cert-manager"
-  namespace: "cert-manager"
-
 serviceAccount:
   # -- Annotations to add to the servicateAccount
   annotations: {}

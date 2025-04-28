@@ -24,10 +24,6 @@ dependencies:
     name: docker-registry-ui
     repository: https://helm.joxit.dev
     version: 1.1.3
-  - condition: cert-manager.enabled
-    name: cert-manager
-    repository: https://charts.jetstack.io
-    version: 1.17.2
 description: kuik is a container image caching system for Kubernetes.
 home: https://github.com/enix/kube-image-keeper
 maintainers:
