@@ -74,7 +74,7 @@ installCRDs: false
 crds:
   # This option decides if the CRDs should be installed
   # as part of the Helm installation.
-  enabled: false
+  enabled: true
 
   # This option makes it so that the "helm.sh/resource-policy": keep
   # annotation is added to the CRD. This will prevent Helm from uninstalling
@@ -166,12 +166,12 @@ clusterResourceNamespace: ""
 # This namespace allows you to define where the services are installed into.
 # If not set then they use the namespace of the release.
 # This is helpful when installing cert manager as a chart dependency (sub chart).
-namespace: ""
+namespace: "cert-manager"
 
 # Override the "cert-manager.fullname" value. This value is used as part of
 # most of the names of the resources created by this Helm chart.
 # +docs:property
-# fullnameOverride: "my-cert-manager"
+fullnameOverride: "cert-manager"
 
 # Override the "cert-manager.name" value, which is used to annotate some of
 # the resources that are created by this Chart (using "app.kubernetes.io/name").
@@ -282,8 +282,8 @@ disableAutoApproval: false
 # ref: https://cert-manager.io/docs/concepts/certificaterequest/#approval
 # +docs:property
 approveSignerNames:
-- issuers.cert-manager.io/*
-- clusterissuers.cert-manager.io/*
+  - issuers.cert-manager.io/*
+  - clusterissuers.cert-manager.io/*
 
 # Additional command line flags to pass to cert-manager controller binary.
 # To see all available flags run `docker run quay.io/jetstack/cert-manager-controller:<version> --help`.
@@ -327,7 +327,7 @@ containerSecurityContext:
   allowPrivilegeEscalation: false
   capabilities:
     drop:
-    - ALL
+      - ALL
   readOnlyRootFilesystem: true
 
 # Additional volumes to add to the cert-manager controller pod.
@@ -405,7 +405,8 @@ nodeSelector:
   kubernetes.io/os: linux
 
 # +docs:ignore
-ingressShim: {}
+ingressShim:
+  {}
 
   # Optional default issuer to use for ingress resources.
   # +docs:property=ingressShim.defaultIssuerName
@@ -433,7 +434,6 @@ ingressShim: {}
 # but certain domains should be excluded.
 # +docs:property
 # no_proxy: 127.0.0.1,localhost
-
 
 # A Kubernetes Affinity, if required. For more information, see [Affinity v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#affinity-v1-core).
 #
@@ -693,7 +693,7 @@ webhook:
     allowPrivilegeEscalation: false
     capabilities:
       drop:
-      - ALL
+        - ALL
     readOnlyRootFilesystem: true
 
   podDisruptionBudget:
@@ -760,7 +760,6 @@ webhook:
     #      operator: NotIn
     #      values:
     #        - kube-system
-
 
   # Additional command line flags to pass to cert-manager webhook binary.
   # To see all available flags run `docker run quay.io/jetstack/cert-manager-webhook:<version> --help`.
@@ -944,7 +943,8 @@ webhook:
 
   # Overrides the mutating webhook and validating webhook so they reach the webhook
   # service using the `url` field instead of a service.
-  url: {}
+  url:
+    {}
     # host:
 
   # Enables default network policies for webhooks.
@@ -956,30 +956,30 @@ webhook:
     # inbound traffic.
     # +docs:property
     ingress:
-    - from:
-      - ipBlock:
-          cidr: 0.0.0.0/0
+      - from:
+          - ipBlock:
+              cidr: 0.0.0.0/0
 
     # Egress rule for the webhook network policy. By default, it allows all
     # outbound traffic to ports 80 and 443, as well as DNS ports.
     # +docs:property
     egress:
-    - ports:
-      - port: 80
-        protocol: TCP
-      - port: 443
-        protocol: TCP
-      - port: 53
-        protocol: TCP
-      - port: 53
-        protocol: UDP
-      # On OpenShift and OKD, the Kubernetes API server listens on.
-      # port 6443.
-      - port: 6443
-        protocol: TCP
-      to:
-      - ipBlock:
-          cidr: 0.0.0.0/0
+      - ports:
+          - port: 80
+            protocol: TCP
+          - port: 443
+            protocol: TCP
+          - port: 53
+            protocol: TCP
+          - port: 53
+            protocol: UDP
+          # On OpenShift and OKD, the Kubernetes API server listens on.
+          # port 6443.
+          - port: 6443
+            protocol: TCP
+        to:
+          - ipBlock:
+              cidr: 0.0.0.0/0
 
   # Additional volumes to add to the cert-manager controller pod.
   volumes: []
@@ -1060,7 +1060,7 @@ cainjector:
     allowPrivilegeEscalation: false
     capabilities:
       drop:
-      - ALL
+        - ALL
     readOnlyRootFilesystem: true
 
   podDisruptionBudget:
@@ -1124,7 +1124,6 @@ cainjector:
   #
   # For more information, see [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
   resources: {}
-
 
   # The nodeSelector on Pods tells Kubernetes to schedule Pods on the nodes with
   # matching labels.
@@ -1287,7 +1286,7 @@ startupapicheck:
     allowPrivilegeEscalation: false
     capabilities:
       drop:
-      - ALL
+        - ALL
     readOnlyRootFilesystem: true
 
   # Timeout for 'kubectl check api' command.
@@ -1315,7 +1314,7 @@ startupapicheck:
   # the webhook URL, IP address and TCP connect errors for example.
   # +docs:property
   extraArgs:
-  - -v
+    - -v
 
   # Additional environment variables to pass to cert-manager startupapicheck binary.
   # For example:
@@ -1333,7 +1332,6 @@ startupapicheck:
   #
   # For more information, see [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
   resources: {}
-
 
   # The nodeSelector on Pods tells Kubernetes to schedule Pods on the nodes with
   # matching labels.
