@@ -77,13 +77,7 @@ controllers:
   webhook:
     # -- Don't enable image caching for pods scheduled into these namespaces
     ignoredNamespaces:
-      [
-        kube-system,
-        argocd,
-        gke-managed-system,
-        gke-managed-volumepopulator,
-        kube-public,
-      ]
+      [argocd, gke-managed-system, gke-managed-volumepopulator, kube-public]
     # -- Don't enable image caching if the image match the following regexes
     ignoredImages: []
     # -- Enable image caching only if the image matches the following regexes (only applies when not empty)
