@@ -383,3 +383,5 @@ serviceAccount:
 psp:
   # -- If True, create the PodSecurityPolicy
   create: false
+
+fullnameOverride: "kube-image-keeper"
